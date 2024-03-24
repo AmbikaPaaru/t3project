@@ -83,7 +83,7 @@ const index = (props: Props) => {
   };
   return (
     <div className="h-screen bg-[#fff]">
-      <div className="border-[#C1C1C1]-600 relative left-[432px] top-[176px] h-[453px] w-[576px] rounded-[20px] border-2">
+      <div className="border-[#C1C1C1]-600 relative top-[176px] h-[453px] w-[576px] rounded-[20px] border-2 m-auto">
         <div className="grid grid-cols-1 gap-4 p-6">
           <div className="text-center text-[32px] font-[600]">
             {" "}
