@@ -2,21 +2,23 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import {
   validateEmail,
-  validateName,
   validatePassword,
 } from "../../components/maincontent/functions";
 import { User } from "~/components/maincontent";
 
 type Props = {};
-
+interface Type {
+  email?:string|undefined,
+  password?:string|undefined
+}
 const index = (props: Props) => {
   const router = useRouter();
   const [showPass, setShowPass] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Type>({
     email: "",
     password: "",
   });
-  const [err, setErr] = useState({
+  const [err, setErr] = useState<Type>({
     email: "",
     password: "",
   });
@@ -30,7 +32,7 @@ const index = (props: Props) => {
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData?.email?.length > 0 && formData?.password?.length > 0) {
+    if (formData?.email  && formData?.password ) {
       const validateEmailField = validateEmail(formData.email, setErr);
       const validatePasswordField = validatePassword(formData.password, setErr);
       if (validateEmailField && validatePasswordField) {
@@ -55,9 +57,9 @@ const index = (props: Props) => {
           router.push("/home")
         } else {
           if (!FindEmail) {
-            setErr({ email: "Email not found" });
+            setErr({ email: "Email not found",password:"" });
           } else {
-            setErr({ password: "Password is invalid" });
+            setErr({ password: "Password is invalid",email:"" });
           }
         }
       }

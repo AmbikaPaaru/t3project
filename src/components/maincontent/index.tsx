@@ -5,9 +5,9 @@ import { validateEmail, validateName, validatePassword } from "./functions";
 type Props = {};
 
 export interface User {
-  username: string;
-  email: string;
-  password: string;
+  name?: string | undefined;
+  email?: string| undefined;
+  password?: string | undefined;
 }
 const index = (props: Props) => {
   const router = useRouter();
@@ -17,7 +17,7 @@ const index = (props: Props) => {
     email: "",
     password: "",
   });
-  const [err, setErr] = useState({
+  const [err, setErr] = useState<User>({
     name: "",
     email: "",
     password: "",
@@ -37,7 +37,7 @@ const index = (props: Props) => {
       formData?.email?.length > 0 &&
       formData?.password?.length > 0
     ) {
-      const validateNameField = validateName(formData?.name, setErr);
+      const validateNameField = validateName(formData?.name?formData?.name:"", setErr);
       const validateEmailField = validateEmail(formData?.email, setErr);
       const validatePasswordField = validatePassword(
         formData?.password,
@@ -74,7 +74,7 @@ const index = (props: Props) => {
           });
           router.push(`/emailVerification?search=${btoa(formData?.email)}`);
         } else {
-          setErr({ email: "Email already registered" });
+          setErr({ email: "Email already registered",password:"",name:"" });
         }
       }
     } else {

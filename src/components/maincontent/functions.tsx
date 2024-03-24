@@ -22,21 +22,15 @@ export const validateName = (
 };
 
 export const validateEmail = (
-  email: string,
-  setErr: React.Dispatch<
-    React.SetStateAction<{
-      name?: string;
-      email?: string;
-      password?: string;
-    }>
-  >,
+  email: string | undefined,
+  setErr: React.Dispatch<React.SetStateAction<{ email?: string; password?: string;name?:string }>>
 ) => {
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  if (email.length === 0) {
+  if (email && email.length === 0) {
     setErr({ email: "Please enter email" });
     return false;
   }
-  if (email?.length > 0 && !emailRegex.test(email)) {
+  if (email && email?.length > 0 && !emailRegex.test(email)) {
     setErr({ email: "Please enter valid email" });
     return false;
   } 

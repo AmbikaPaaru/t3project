@@ -1,11 +1,5 @@
 import { useRouter } from "next/router";
 import React, { useRef, useState, RefObject, useEffect } from "react";
-import {
-  validateEmail,
-  validateName,
-  validatePassword,
-} from "../../components/maincontent/functions";
-import { atob } from "buffer";
 
 type Props = {};
 export const codeLength = 8;
@@ -74,16 +68,18 @@ const index = (props: Props) => {
     }
   }, []);
 
-  const addStars = (str: string) => {
-    let modifiedString = str.slice(0, 3);
-    for (let i = 3; i < str.length; i++) {
-      modifiedString += "*";
+  const addStars = (str: string | undefined) => {
+    if (str) {
+      let modifiedString = str.slice(0, 3);
+      for (let i = 3; i < str.length; i++) {
+        modifiedString += "*";
+      }
+      return modifiedString;
     }
-    return modifiedString;
   };
   return (
     <div className="h-screen bg-[#fff]">
-      <div className="border-[#C1C1C1]-600 relative top-[176px] h-[453px] w-[576px] rounded-[20px] border-2 m-auto">
+      <div className="border-[#C1C1C1]-600 relative top-[176px] m-auto h-[453px] w-[576px] rounded-[20px] border-2">
         <div className="grid grid-cols-1 gap-4 p-6">
           <div className="text-center text-[32px] font-[600]">
             {" "}
