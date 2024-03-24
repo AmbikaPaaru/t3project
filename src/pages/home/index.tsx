@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { generateProductCategories } from "~/utils/products";
+import './style.css'
 
 type Props = {};
 interface Types {
@@ -43,10 +44,10 @@ function index({}: Props) {
             </span>
             {currentItems?.map((item) => (
               <div className="flex my-4">
-                <input
-                  type="checkbox"
-                  className="form-checkbox mr-4 h-[24px] w-[24px] rounded-[8px] text-indigo-600 checked:bg-[#000] bg-[#CCCCCC]"
-                />
+                <label className="main">
+            <input type="checkbox"/>
+            <span className="checkbox-container"></span>
+        </label>
 
                 <div className="pt-[-25px]">{item?.name}</div>
               </div>
