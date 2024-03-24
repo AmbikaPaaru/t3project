@@ -62,7 +62,6 @@ const index = (props: Props) => {
             );
             return updatedUsersList;
           });
-          alert("Registered successfully");
           setFormData({
             name: "",
             email: "",

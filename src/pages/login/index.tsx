@@ -44,7 +44,6 @@ const index = (props: Props) => {
           (item: User) => item?.password === formData?.password,
         );
         if (FindEmail && FindPassword) {
-          alert("Login successfully");
           setFormData({
             email: "",
             password: "",
@@ -53,6 +52,7 @@ const index = (props: Props) => {
             email: "",
             password: "",
           });
+          router.push("/home")
         } else {
           if (!FindEmail) {
             setErr({ email: "Email not found" });
@@ -102,7 +102,7 @@ const index = (props: Props) => {
               </span>
             )}
 
-            <div className="relative">
+            <div className="relative my-4">
               <label htmlFor="password" className="mt-6">
                 Password
               </label>
