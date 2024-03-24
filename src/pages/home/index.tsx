@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { generateProductCategories } from "~/utils/products";
-import './style.css'
-
-
 interface Types {
   id: string;
   name: string;
