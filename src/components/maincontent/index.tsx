@@ -1,11 +1,17 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { validateEmail, validateName, validatePassword } from "./functions";
 
 type Props = {};
 
+export interface User {
+  username: string;
+  email: string;
+  password: string;
+}
 const index = (props: Props) => {
   const router = useRouter();
+  const [usersList, setUsersList] = useState<User[]>([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -44,43 +50,33 @@ const index = (props: Props) => {
           email: formData.email,
           password: formData.password,
         };
-
-        const mockResponse = {
-          status: "success",
-          message: "User registered successfully",
-        };
-
-        console.log("Mock Response:", mockResponse);
-
-        router.push("/emailVerification");
-        // try {
-        //   const response = await fetch('https://api.neon.tech/v1/2sudo systemctl restart systemd-resolvedsudo systemctl restart systemd-resolvedsudo systemctl restart systemd-resolvedsudo systemctl restart systemd-resolved/registered_users2', {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //       'Authorization': 'Bearer qot5bj65ujdt0unjc9j82ix02jtfp3ri07qvkozx0twewmueoc817k7cb7s2fc8t' // Replace with your Neon.tech API key
-        //     },
-        //     body: JSON.stringify(formData)
-        //   });
-
-        //   if (!response.ok) {
-        //     throw new Error('Failed to store form data in Neon.tech');
-        //   }
-
-        //   console.log('Form data stored successfully in Neon.tech');
-        // } catch (error) {
-        //   console.error('Error storing form data in Neon.tech:', error);
-        // }
-        setFormData({
-          name: "",
-          email: "",
-          password: "",
-        });
-        setErr({
-          name: "",
-          email: "",
-          password: "",
-        });
+        const FindEmail = usersList?.find(
+          (item) => item?.email === formData?.email,
+        );
+        if (!FindEmail) {
+          setUsersList((prevUsersList) => {
+            const updatedUsersList = [...prevUsersList, newUser];
+            localStorage.setItem(
+              "registeredUsers",
+              JSON.stringify(updatedUsersList),
+            );
+            return updatedUsersList;
+          });
+          alert("Registered successfully");
+          setFormData({
+            name: "",
+            email: "",
+            password: "",
+          });
+          setErr({
+            name: "",
+            email: "",
+            password: "",
+          });
+          router.push(`/emailVerification?search=${btoa(formData?.email)}`);
+        } else {
+          setErr({ email: "Email already registered" });
+        }
       }
     } else {
       setErr({
@@ -91,9 +87,16 @@ const index = (props: Props) => {
     }
   };
 
+  useEffect(() => {
+    const storedUsersData = localStorage.getItem("registeredUsers");
+    if (storedUsersData) {
+      setUsersList(JSON.parse(storedUsersData));
+    }
+  }, []);
+
   return (
     <div className="h-screen bg-[#fff]">
-      <div className="border-[#C1C1C1]-600 relative left-[432px] top-[176px] h-[614px] w-[576px] rounded-[20px] border-2">
+      <div className="border-[#C1C1C1]-600 relative top-[176px] h-[614px] w-[576px] rounded-[20px] border-2 m-auto">
         <div className="grid grid-cols-1 gap-4 p-6">
           <div className="text-center text-[32px] font-[600]">
             Create your account

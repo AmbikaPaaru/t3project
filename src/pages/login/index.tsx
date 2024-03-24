@@ -5,6 +5,7 @@ import {
   validateName,
   validatePassword,
 } from "../../components/maincontent/functions";
+import { User } from "~/components/maincontent";
 
 type Props = {};
 
@@ -29,36 +30,48 @@ const index = (props: Props) => {
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (formData?.email?.length > 0 && formData?.password?.length > 0) {
+      const validateEmailField = validateEmail(formData.email, setErr);
+      const validatePasswordField = validatePassword(formData.password, setErr);
+      if (validateEmailField && validatePasswordField) {
+        const usersListString = localStorage.getItem("registeredUsers");
+        const usersList = usersListString ? JSON.parse(usersListString) : [];
 
-    const validateEmailField = validateEmail(formData.email, setErr);
-    const validatePasswordField = validatePassword(formData.password, setErr);
-    if (validateEmailField && validatePasswordField) {
-      const newUser = {
-        email: formData.email,
-        password: formData.password,
-      };
-
-      const mockResponse = {
-        status: "success",
-        message: "User login successfully",
-      };
-
-      console.log("Mock Response:", mockResponse);
-
-      setFormData({
-        email: "",
-        password: "",
-      });
+        const FindEmail = usersList?.find(
+          (item: User) => item?.email === formData?.email,
+        );
+        const FindPassword = usersList?.find(
+          (item: User) => item?.password === formData?.password,
+        );
+        if (FindEmail && FindPassword) {
+          alert("Login successfully");
+          setFormData({
+            email: "",
+            password: "",
+          });
+          setErr({
+            email: "",
+            password: "",
+          });
+        } else {
+          if (!FindEmail) {
+            setErr({ email: "Email not found" });
+          } else {
+            setErr({ password: "Password is invalid" });
+          }
+        }
+      }
+    } else {
       setErr({
-        email: "",
-        password: "",
+        email: "Please enter email",
+        password: "Please enter password",
       });
     }
   };
 
   return (
     <div className="h-screen bg-[#fff]">
-      <div className="border-[#C1C1C1]-600 relative left-[432px] top-[176px] h-[614px] w-[576px] rounded-[20px] border-2">
+      <div className="border-[#C1C1C1]-600 relative top-[176px] h-[614px] w-[576px] rounded-[20px] border-2 m-auto">
         <div className="grid grid-cols-1 gap-4 p-6">
           <div className="text-center text-[32px] font-[600]">Login</div>
           <span className="text-center text-[24px] font-[500]">
@@ -67,7 +80,11 @@ const index = (props: Props) => {
           <span className="text-center text-[16px] font-[400]">
             The next gen business marketplace
           </span>
-          <form className="m-auto grid w-[456px] gap-1" onSubmit={handleSubmit} autoComplete="off">
+          <form
+            className="m-auto grid w-[456px] gap-1"
+            onSubmit={handleSubmit}
+            autoComplete="off"
+          >
             <label htmlFor="email" className="mt-6">
               Email
             </label>
@@ -119,21 +136,20 @@ const index = (props: Props) => {
               LOGIN
             </button>
           </form>
-          <div className="relative top-[37px] w-[456px] m-auto border-t border-[#c1c1c1]-800">
-          <div className="relative top-[17px] m-auto flex w-[261px]">
-            <span className="pr-2 text-[16px] font-[400] text-[#333]">
-              {" "}
-              Dont have an account?
-            </span>
-            <div
-              className="cursor-pointer text-[16px] font-[500]"
-              onClick={() => router.push("/")}
-            >
-              SIGN UP
+          <div className="border-[#c1c1c1]-800 relative top-[37px] m-auto w-[456px] border-t">
+            <div className="relative top-[17px] m-auto flex w-[261px]">
+              <span className="pr-2 text-[16px] font-[400] text-[#333]">
+                {" "}
+                Dont have an account?
+              </span>
+              <div
+                className="cursor-pointer text-[16px] font-[500]"
+                onClick={() => router.push("/")}
+              >
+                SIGN UP
+              </div>
             </div>
           </div>
-          </div>
-         
         </div>
       </div>
     </div>
