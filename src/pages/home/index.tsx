@@ -53,7 +53,7 @@ function index({}: Props) {
             ))}
           </div>
         </div>
-        <div className={`mt-4  ml-12 flex justify-start text-[#ACACAC]`}>
+        <div className={`mt-4  ml-12 flex justify-center text-[#ACACAC]`}>
           <button
             onClick={() => handlePageChange(1)}
             className={`px-2 ${currentPage === 1 ? "cursor-not-allowed text-[#ACACAC]" : "text-[#000]"} disabled:opacity-50`}
