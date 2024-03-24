@@ -5,9 +5,9 @@ import { validateEmail, validateName, validatePassword } from "./functions";
 type Props = {};
 
 export interface User {
-  name?: string | undefined;
-  email?: string| undefined;
-  password?: string | undefined;
+  name?: string ;
+  email?: string;
+  password?: string;
 }
 const index = (props: Props) => {
   const router = useRouter();
@@ -32,13 +32,8 @@ const index = (props: Props) => {
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (
-      formData?.name?.length > 0 &&
-      formData?.email?.length > 0 &&
-      formData?.password?.length > 0
-    ) {
-      const validateNameField = validateName(formData?.name?formData?.name:"", setErr);
-      const validateEmailField = validateEmail(formData?.email, setErr);
+      const validateNameField = validateName(formData?.name, setErr,);
+      const validateEmailField = validateEmail(formData?.email, setErr,);
       const validatePasswordField = validatePassword(
         formData?.password,
         setErr,
@@ -77,13 +72,7 @@ const index = (props: Props) => {
           setErr({ email: "Email already registered",password:"",name:"" });
         }
       }
-    } else {
-      setErr({
-        name: "Please enter name",
-        email: "Please enter email",
-        password: "Please enter password",
-      });
-    }
+    
   };
 
   useEffect(() => {
