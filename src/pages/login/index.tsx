@@ -6,12 +6,11 @@ import {
 } from "../../components/maincontent/functions";
 import { User } from "~/components/maincontent";
 
-type Props = {};
 interface Type {
   email?:string|undefined,
   password?:string|undefined
 }
-const index = (props: Props) => {
+const Index = () => {
   const router = useRouter();
   const [showPass, setShowPass] = useState(false);
   const [formData, setFormData] = useState<Type>({
@@ -157,4 +156,4 @@ const index = (props: Props) => {
     </div>
   );
 };
-export default index;
+export default Index;

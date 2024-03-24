@@ -2,14 +2,12 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { validateEmail, validateName, validatePassword } from "./functions";
 
-type Props = {};
-
 export interface User {
   name?: string ;
   email?: string;
   password?: string;
 }
-const index = (props: Props) => {
+const Index = () => {
   const router = useRouter();
   const [usersList, setUsersList] = useState<User[]>([]);
   const [formData, setFormData] = useState({
@@ -167,4 +165,4 @@ const index = (props: Props) => {
     </div>
   );
 };
-export default index;
+export default Index;

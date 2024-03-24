@@ -1,17 +1,15 @@
 import { useRouter } from "next/router";
 import React, { useRef, useState, RefObject, useEffect } from "react";
 
-type Props = {};
 export const codeLength = 8;
 export const generateCodeArray = () =>
   Array.from({ length: codeLength + 1 }, (_, index) => index + 1);
 
-const index = (props: Props) => {
+const Index = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
-  const inputRefs: RefObject<HTMLInputElement | null>[] = Array.from(
-    { length: codeLength + 1 },
-    () => useRef<HTMLInputElement | null>(null),
+  const inputRefs = Array.from({ length: codeLength + 1 }, () =>
+    useRef<HTMLInputElement | null>(null),
   );
   const convertRef = <T extends HTMLInputElement>(
     ref: RefObject<HTMLInputElement | null>,
@@ -28,9 +26,12 @@ const index = (props: Props) => {
     "8",
   ]);
 
-  const handleInput = (index: any, e: any) => {
+  const handleInput = (
+    index: number,
+    e: any,
+  ) => {
     const value = e.target.value;
-    if (!isNaN(value) && value.length === 1) {
+    if (!isNaN(parseInt(value)) && value.length === 1) {
       const updatedCode = [...code];
       updatedCode[index - 1] = value;
       setCode(updatedCode);
@@ -42,7 +43,10 @@ const index = (props: Props) => {
     }
   };
 
-  const handleBackspace = (index: any, e: any) => {
+  const handleBackspace = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (e.keyCode === 8 && index > 0) {
       e.preventDefault();
       const updatedCode = [...code];
@@ -130,4 +134,4 @@ const index = (props: Props) => {
     </div>
   );
 };
-export default index;
+export default Index;

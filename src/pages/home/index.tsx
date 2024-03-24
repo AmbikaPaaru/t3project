@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import { generateProductCategories } from "~/utils/products";
 import './style.css'
 
-type Props = {};
+
 interface Types {
   id: string;
   name: string;
 }
 
-function index({}: Props) {
+function Index() {
   const [list, setList] = useState<Types[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -43,7 +43,7 @@ function index({}: Props) {
               My saved interests!
             </span>
             {currentItems?.map((item) => (
-              <div className="flex my-4">
+              <div className="flex my-4" key={item?.id}>
                 <label className="main">
             <input type="checkbox"/>
             <span className="checkbox-container"></span>
@@ -118,4 +118,4 @@ function index({}: Props) {
   );
 }
 
-export default index;
+export default Index;
